@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharactorData
+[CreateAssetMenu(menuName = "CreateData")]
+public class CharactorData : ScriptableObject
 {
     public Sprite img;
     public string name;
