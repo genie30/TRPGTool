@@ -73,7 +73,6 @@ public class CreateButton : MonoBehaviour
                 else if (num[i] < 0) num[i] = 0;
                 else if (num[i] > 4) num[i] = 4;
             }
-
         }
         return num;
     }
@@ -81,8 +80,54 @@ public class CreateButton : MonoBehaviour
     private void OnEnable()
     {
         dd.ClearOptions();
+        List<string> oplist = new List<string>();
+        oplist.Add("なし");
         foreach(var item in CharacterDataList.characterList)
         {
+            oplist.Add(item.name);
         }
+        dd.AddOptions(oplist);
+        dd.RefreshShownValue();
+    }
+
+    public void DropChange()
+    {
+        DataLoad(dd.value);
+    }
+
+    private void DataLoad(int num)
+    {
+        if (num == 0) return;
+        num -= 1;
+        var data = CharacterDataList.characterList[num];
+
+        img.sprite = data.img;
+        name.text = data.name;
+        var tglChild = toggle.GetComponentsInChildren<Toggle>();
+        switch (data.type)
+        {
+            case "ドール":
+                tglChild[0].isOn = true;
+                break;
+            case "サヴァント":
+                tglChild[1].isOn = true;
+                break;
+            case "ホラー":
+                tglChild[2].isOn = true;
+                break;
+            case "レギオン":
+                tglChild[3].isOn = true;
+                break;
+        }
+        hhp.text = data.headhp.ToString();
+        ahp.text = data.armhp.ToString();
+        bhp.text = data.bodyhp.ToString();
+        lhp.text = data.leghp.ToString();
+        sana.text = data.sana.ToString();
+        sanb.text = data.sanb.ToString();
+        sanc.text = data.sanc.ToString();
+        sand.text = data.sand.ToString();
+        sane.text = data.sane.ToString();
+        memo.text = data.memo;
     }
 }
