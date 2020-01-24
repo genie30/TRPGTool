@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "CreateData")]
-public class CharactorData : ScriptableObject
+public class CharacterData : ScriptableObject
 {
     public Sprite img;
     public string name;
     public string type;
     public int headhp, armhp, bodyhp, leghp;
     public int sana, sanb, sanc, sand, sane;
+    public int overDamage;
     public string memo;
 
-    public CharactorData(Sprite img, string name, string type, int headhp, int armhp, int bodyhp, int leghp, int sana, int sanb, int sanc, int sand, int sane, string memo)
+    public CharacterData(Sprite img, string name, string type, int headhp, int armhp, int bodyhp, int leghp, int sana, int sanb, int sanc, int sand, int sane, string memo)
     {
         this.img = img;
         this.name = name;
@@ -26,6 +27,7 @@ public class CharactorData : ScriptableObject
         this.sanc = sanc;
         this.sand = sand;
         this.sane = sane;
+        overDamage = 0;
         this.memo = memo;
     }
 }

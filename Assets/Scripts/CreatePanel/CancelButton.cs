@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateCharactorButton : MonoBehaviour
+public class CancelButton : MonoBehaviour
 {
     [SerializeField]
-    GameObject create;
+    GameObject panel;
 
     public void OnClick()
     {
-        create.SetActive(true);
+        panel.SetActive(false);
     }
 }

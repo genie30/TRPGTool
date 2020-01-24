@@ -9,17 +9,23 @@ public class TileController : MonoBehaviour
     [SerializeField]
     Tilemap tilemap;
 
+    [SerializeField]
+    GameObject mark;
+
+    int minx = -13, maxx = 11, miny = -11, maxy = 10;
+
     private void Update()
     {
         pos = Input.mousePosition;
         pos.z = 10f;
-        wpos = Camera.main.ScreenToWorldPoint(pos);
-        ClickPos(wpos);
+        wpos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(pos));
+        if(wpos.x >= minx && wpos.x <= maxx && wpos.y >= miny && wpos.y <= maxy)
+        {
+            mark.transform.position = wpos;
+        }
     }
 
     private void ClickPos(Vector3 pos)
     {
-        Vector3Int ipos = tilemap.WorldToCell(pos);
-        Debug.Log(ipos);
     }
 }
