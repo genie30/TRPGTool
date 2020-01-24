@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ImageChanger : MonoBehaviour
 {
-    Sprite[] spr = Resources.LoadAll<Sprite>("image");
+    Sprite[] spr;
     [SerializeField]
     Image image;
     int num = 0;
@@ -14,6 +14,8 @@ public class ImageChanger : MonoBehaviour
 
     private void OnEnable()
     {
+        spr = Resources.LoadAll<Sprite>("Image");
+        if (spr == null) return;
         image.sprite = spr[0];
     }
 

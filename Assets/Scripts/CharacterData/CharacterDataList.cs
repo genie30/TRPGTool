@@ -10,6 +10,7 @@ public class CharacterDataList : MonoBehaviour
     private void Start()
     {
         var data = Resources.LoadAll("ItemData");
+        if (data == null) return;
         foreach(var item in data)
         {
             characterList.Add((CharacterData)item);
