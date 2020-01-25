@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CreateSkillInfomation : MonoBehaviour
 {
+    
+
     public static CreateSkillInfomation instance;
 
     CharacterData Character;
@@ -75,11 +77,13 @@ public class CreateSkillInfomation : MonoBehaviour
         }
         else
         {
-            Debug.Log("スキル作成成功");
+            //Debug.Log("スキル作成成功");
             return true;
         }
 
     } 
+
+  
     public void CreateSkill()
     {
         if (!CheckIntegrity())
@@ -286,5 +290,14 @@ public class CreateSkillInfomation : MonoBehaviour
         updateButton.SetActive(false);
         createButton.SetActive(true);
     }
+//[SerializeField] Dropdown testDrop;
+//public void TestDropCreate()
+//{
+//    setItem.skillList.CreateDropdown(testDrop);
+//}
+//public void GetSkill()
+//{
+//    Debug.Log(setItem.skillList.SearchName(inputName.text).name);
+//}
 
 }

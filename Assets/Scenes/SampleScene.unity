@@ -70267,6 +70267,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreateSkillPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3130558389271910069, guid: dd2179c1dca0409428253f7b62ee7864,
+        type: 3}
+      propertyPath: testDrop
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd2179c1dca0409428253f7b62ee7864, type: 3}
 --- !u!1001 &1722680722
