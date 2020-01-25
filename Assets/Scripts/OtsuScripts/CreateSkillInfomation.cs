@@ -33,10 +33,11 @@ public class CreateSkillInfomation : MonoBehaviour
     }
 
     ////スキル入力内容の整合性チェック
-    //public void CheckIntegrity()
-    //{
+    public void CheckIntegrity()
+    {
+        string error;
 
-    //}
+    }
 
     ////デバッグ用
     //public void DebugOutPut()
