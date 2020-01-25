@@ -36,7 +36,6 @@ public class CharacterController : MonoBehaviour, IBeginDragHandler, IDragHandle
     {
         var wpos = tilemap.WorldToCell(pos);
         transform.position = wpos;
-        Debug.Log("move" + wpos);
     }
 
     public void OnDrag(PointerEventData eventData)
