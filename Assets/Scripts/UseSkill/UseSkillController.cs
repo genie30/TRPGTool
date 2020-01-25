@@ -64,8 +64,8 @@ public class UseSkillController : MonoBehaviour
 
         cost.text = loadSkill.cost.ToString();
         range.text = loadSkill.rangeMin + "~" + loadSkill.rangeMax;
-        pow.text = loadSkill.damage;
-        cor.text = loadSkill.correction;
+        pow.text = loadSkill.damage.ToString();
+        cor.text = loadSkill.correction.ToString();
         memo.text = loadSkill.memo;
 
         explosion.isOn = loadSkill.explosion;
