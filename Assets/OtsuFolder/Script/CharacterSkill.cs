@@ -46,5 +46,27 @@ public class CharacterSkill
 
     }
 
+    //確認用
+    public void CheckField()
+    {
+        Debug.Log("name" + this.name);
+        Debug.Log("type" + this.type);
+        Debug.Log("cost" + this.cost);
+        Debug.Log("rangeMin" + this.rangeMin);
+        Debug.Log("rangeMax" + this.rangeMax);
+        Debug.Log("damage" + this.damage);
+
+        Debug.Log("explosion" + this.explosion);
+        Debug.Log("cut" + this.cut);
+        Debug.Log("oneCombo" + this.oneCombo);
+        Debug.Log("twoCombo" + this.twoCombo);
+        Debug.Log("areaAttack" + this.areaAttack);
+
+        Debug.Log("correction" + this.correction);
+        Debug.Log("memo" + this.memo);
+
+        Debug.Log("addSan" + this.addSan);
+        Debug.Log("move" + this.move);
+    }
 
 }
