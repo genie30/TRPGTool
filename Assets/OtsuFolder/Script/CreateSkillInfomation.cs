@@ -282,6 +282,10 @@ public class CreateSkillInfomation : MonoBehaviour
 
     public void UpdateButtonClick()
     {
+        if (!CheckIntegrity())
+        {
+            return;
+        }
         int dropNum = skillListUi.value-1;
         setItem.skillList.skillList.RemoveAt(skillListUi.value - 1);
         setItem.skillList.skillList.Insert(skillListUi.value - 1, CreateSkillInstance());
