@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public static bool Stay{ get; set; }
 
+    public static CharacterItem ci;
+
     private void Awake()
     {
         instance = this;

@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterSkillList
+public class CharacterSkillList : MonoBehaviour
 {
     public List<CharacterSkill> skillList = new List<CharacterSkill>();
-    //public static CharacterSkillList instance;
-
-    //private void Awake()
-    //{
-    //    instance = this;
-    //}
 
     //引数のドロップダウンにスキル名を表示
     public void CreateDropdown(Dropdown drop)
