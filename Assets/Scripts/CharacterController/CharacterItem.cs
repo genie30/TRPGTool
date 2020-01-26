@@ -9,6 +9,11 @@ public class CharacterItem : MonoBehaviour
 
     public int areanum; // 奈落0　地獄1　煉獄2　花園3　楽園4
 
+    private void Start()
+    {
+        skillList = new CharacterSkillList();
+    }
+
     private void Update()
     {
         var pos = transform.position;
