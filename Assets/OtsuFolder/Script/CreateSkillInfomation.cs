@@ -186,6 +186,7 @@ public class CreateSkillInfomation : MonoBehaviour
         setItem = item;
         CharacterImage.sprite = setItem.data.img;
         CharacterName.text = setItem.data.name;
+        ResetAll();
         SkillListUpdate();
     }
     public void CreateSkillUiOff()
