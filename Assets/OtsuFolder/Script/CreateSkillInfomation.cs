@@ -187,6 +187,7 @@ public class CreateSkillInfomation : MonoBehaviour
         setItem = item;
         CharacterImage.sprite = setItem.data.img;
         CharacterName.text = setItem.data.name;
+        ResetAll();
         SkillListUpdate();
     }
     public void CreateSkillUiOff()
@@ -283,6 +284,10 @@ public class CreateSkillInfomation : MonoBehaviour
 
     public void UpdateButtonClick()
     {
+        if (!CheckIntegrity())
+        {
+            return;
+        }
         int dropNum = skillListUi.value-1;
         setItem.skillList.skillList.RemoveAt(skillListUi.value - 1);
         setItem.skillList.skillList.Insert(skillListUi.value - 1, CreateSkillInstance());
