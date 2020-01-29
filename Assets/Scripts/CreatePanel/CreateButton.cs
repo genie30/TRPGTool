@@ -35,8 +35,13 @@ public class CreateButton : MonoBehaviour
         var piece = Instantiate(pref, preffolder.transform);
         CharacterDataList.RemoveData(data.name);
         CharacterDataList.ListAdd(data);
-        piece.GetComponent<CharacterItem>().data = data;
+        var ci = piece.GetComponent<CharacterItem>();
+        ci.data = data;
         piece.name = data.name;
+
+        GameManager.instance.onBoardCharacterList.Add(ci);
+        HPBar.instance.NodeCreate(GameManager.instance.onBoardCharacterList.Count -1);
+
         panel.SetActive(false);
     }
 

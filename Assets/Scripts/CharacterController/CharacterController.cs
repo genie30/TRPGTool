@@ -45,6 +45,6 @@ public class CharacterController : MonoBehaviour, IBeginDragHandler, IDragHandle
     public void OnPointerClick(PointerEventData eventData)
     {
         GameManager.ci = GetComponent<CharacterItem>();
-        Debug.Log(GameManager.ci.gameObject.name);
+        SelectCharacterPanel.instance.SelectChange();
     }
 }

@@ -11,7 +11,9 @@ public class CharacterData : ScriptableObject
     public int headhp, armhp, bodyhp, leghp;
     public int sana, sanb, sanc, sand, sane;
     public int overDamage;
+    public int overSan;
     public string memo;
+    public int area;
 
     public CharacterData(Sprite img, string name, string type, int headhp, int armhp, int bodyhp, int leghp, int sana, int sanb, int sanc, int sand, int sane, string memo)
     {
@@ -28,6 +30,8 @@ public class CharacterData : ScriptableObject
         this.sand = sand;
         this.sane = sane;
         overDamage = 0;
+        overSan = 0;
         this.memo = memo;
+        area = 2;
     }
 }

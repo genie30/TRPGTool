@@ -16,6 +16,7 @@ public class CharacterSkill
     public bool oneCombo; //連撃1
     public bool twoCombo; //連撃2
     public bool areaAttack; //全体攻撃
+    public bool fallDowm; // 転倒
 
     public int correction; //ダイス補正値
     public string memo;
@@ -23,7 +24,7 @@ public class CharacterSkill
     public int addSan; //狂気点
     public int move; //移動量
 
-    public CharacterSkill(string name, int type, int cost, int rangeMin, int rangeMax, int damage, bool explosion, bool cut, bool oneCombo, bool twoCombo, bool areaAttack, int correction, string memo, int addSan, int move)
+    public CharacterSkill(string name, int type, int cost, int rangeMin, int rangeMax, int damage, bool explosion, bool cut, bool oneCombo, bool twoCombo, bool areaAttack, bool fallDown, int correction, string memo, int addSan, int move)
     {
         this.name = name;
         this.type = type;
@@ -37,6 +38,7 @@ public class CharacterSkill
         this.oneCombo = oneCombo;
         this.twoCombo = twoCombo;
         this.areaAttack = areaAttack;
+        this.fallDowm = fallDown;
 
         this.correction = correction;
         this.memo = memo;
