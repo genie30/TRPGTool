@@ -27,6 +27,7 @@ public class CreateSkillInfomation : MonoBehaviour
     [SerializeField] Toggle inputOneCombo;
     [SerializeField] Toggle inputTwoCombo;
     [SerializeField] Toggle inputAreaAttack;
+    [SerializeField] Toggle inputFallDown;
     [SerializeField] Toggle[] inputCorrection = new Toggle[6];
     [SerializeField] Text inputMemo;
     [SerializeField] GameObject createButton;
@@ -157,7 +158,7 @@ public class CreateSkillInfomation : MonoBehaviour
         {
             san = 1;
         }
-        return new CharacterSkill(inputName.text, dropType.value, int.Parse(inputCost.text), int.Parse(inputRangeMin.text), int.Parse(inputRangeMax.text), int.Parse(inputDamage.text), inputExplosion.isOn, inputCut.isOn, inputOneCombo.isOn, inputTwoCombo.isOn, inputAreaAttack.isOn, correction, inputMemo.text, san, move);
+        return new CharacterSkill(inputName.text, dropType.value, int.Parse(inputCost.text), int.Parse(inputRangeMin.text), int.Parse(inputRangeMax.text), int.Parse(inputDamage.text), inputExplosion.isOn, inputCut.isOn, inputOneCombo.isOn, inputTwoCombo.isOn, inputAreaAttack.isOn, inputFallDown.isOn, correction, inputMemo.text, san, move);
     }
     void ResetAll()
     {
