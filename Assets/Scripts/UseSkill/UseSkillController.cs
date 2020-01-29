@@ -15,7 +15,7 @@ public class UseSkillController : MonoBehaviour
     [SerializeField]
     Text type, cost, range, pow, cor, memo;
     [SerializeField]
-    Toggle explosion, cut, chain1, chain2, allatk;
+    Toggle explosion, cut, chain1, chain2, allatk, falldown;
 
     CharacterSkill UseSkill;
     CharacterItem TargetPiece;
@@ -75,6 +75,7 @@ public class UseSkillController : MonoBehaviour
         chain1.isOn = loadSkill.oneCombo;
         chain2.isOn = loadSkill.twoCombo;
         allatk.isOn = loadSkill.areaAttack;
+        falldown.isOn = loadSkill.fallDowm;
 
         TargetSeach(loadSkill);
     }
