@@ -15,8 +15,7 @@ public class CreateText : MonoBehaviour
 
     public void TextLog(string addText)
     {
-        GameObject newText = Instantiate(textObject);
-        newText.transform.SetParent(transform);
+        GameObject newText = Instantiate(textObject, transform);
         newText.GetComponent<Text>().text = addText;
     }
 }

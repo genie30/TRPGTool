@@ -38,6 +38,7 @@ public class CreateButton : MonoBehaviour
         var ci = piece.GetComponent<CharacterItem>();
         ci.data = data;
         piece.name = data.name;
+        piece.GetComponent<SpriteRenderer>().sprite = data.img;
 
         GameManager.instance.onBoardCharacterList.Add(ci);
         HPBar.instance.NodeCreate(GameManager.instance.onBoardCharacterList.Count -1);
@@ -72,7 +73,7 @@ public class CreateButton : MonoBehaviour
             {
                 if (!b || num[i] < 0) num[i] = 3;
             }
-            if (num[i] >= 5)
+            else if (num[i] >= 5)
             {
                 if (!b) num[i] = 3;
                 else if (num[i] < 0) num[i] = 0;

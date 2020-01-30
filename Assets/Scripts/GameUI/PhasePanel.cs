@@ -10,7 +10,7 @@ public class PhasePanel : MonoBehaviour
     [SerializeField]
     Button button, pccreatebutton, comcreatebutton, comselectbutton;
 
-    GameState state;
+    GameState state = GameState.PhaseEnd;
 
     private void Update()
     {
