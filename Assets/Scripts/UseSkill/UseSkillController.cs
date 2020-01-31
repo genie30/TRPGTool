@@ -8,12 +8,14 @@ public class UseSkillController : MonoBehaviour
     public static UseSkillController instance;
 
     private List<CharacterSkill> skillList;
-    private List<CharacterItem> targetList;
+    private List<CharacterItem> targetList = new List<CharacterItem>();
 
+    [SerializeField]
+    GameObject panel;
     [SerializeField]
     Dropdown selectSkill, target, corjudge, cordam, corcost;
     [SerializeField]
-    Text type, cost, range, pow, cor, memo;
+    Text type, cost, range, pow, cor, memo, move;
     [SerializeField]
     Toggle explosion, cut, chain1, chain2, allatk, falldown;
 
@@ -36,6 +38,7 @@ public class UseSkillController : MonoBehaviour
         }
         selectSkill.AddOptions(opt);
         selectSkill.RefreshShownValue();
+        SkillSelected();
     }
 
     public void SkillSelected()
@@ -53,12 +56,15 @@ public class UseSkillController : MonoBehaviour
                 typestr = "防御";
                 break;
             case 2:
-                typestr = "支援・妨害";
+                typestr = "ダメージ増加";
                 break;
             case 3:
-                typestr = "移動";
+                typestr = "支援・妨害";
                 break;
             case 4:
+                typestr = "移動";
+                break;
+            case 5:
                 typestr = "その他";
                 break;
         }
@@ -68,6 +74,7 @@ public class UseSkillController : MonoBehaviour
         range.text = loadSkill.rangeMin + "~" + loadSkill.rangeMax;
         pow.text = loadSkill.damage.ToString();
         cor.text = loadSkill.correction.ToString();
+        move.text = loadSkill.move.ToString();
         memo.text = loadSkill.memo;
 
         explosion.isOn = loadSkill.explosion;
@@ -101,6 +108,12 @@ public class UseSkillController : MonoBehaviour
         UseSkill = skillList[selectSkill.value];
         TargetPiece = targetList[target.value];
         TypeSpritter();
+        panel.SetActive(false);
+    }
+
+    public void CancelButton()
+    {
+        panel.SetActive(false);
     }
 
     private void TypeSpritter()
@@ -113,13 +126,16 @@ public class UseSkillController : MonoBehaviour
             case 1: // 防御
                 GuardMethod();
                 break;
-            case 2: // 支援
+            case 2: // ダメージ増加
+                DamagePlusMethod();
+                break;
+            case 3: // 支援
                 BuffMethod();
                 break;
-            case 3: // 移動
+            case 4: // 移動
                 MoveMethod();
                 break;
-            case 4: // その他
+            case 5: // その他
                 break;
         }
     }
@@ -396,7 +412,16 @@ public class UseSkillController : MonoBehaviour
         var pname = GameManager.ci.data.name;
         GameManager.DamFix = UseSkill.damage * -1;
         var msg =
-            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ" + GameManager.DamFix;
+            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ修正" + GameManager.DamFix;
+        CreateText.instance.TextLog(msg);
+    }
+
+    private void DamagePlusMethod()
+    {
+        var pname = GameManager.ci.data.name;
+        GameManager.DamFix = UseSkill.damage;
+        var msg =
+            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ修正" + GameManager.DamFix;
         CreateText.instance.TextLog(msg);
     }
 
@@ -416,7 +441,7 @@ public class UseSkillController : MonoBehaviour
             pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / 移動" + UseSkill.move;
         CreateText.instance.TextLog(msg);
         var pos = TargetPiece.gameObject.transform.localPosition;
-        pos = new Vector3(pos.x + (UseSkill.move * 5), pos.y - UseSkill.cost, pos.z);
+        TargetPiece.gameObject.transform.localPosition = new Vector3(pos.x + (UseSkill.move * 5), pos.y - UseSkill.cost, pos.z);
     }
 
     private void DestroyCheck()

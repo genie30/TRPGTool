@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class CommandSelectButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    GameObject usepanel;
 
-    // Update is called once per frame
-    void Update()
+    public void OnClick()
     {
-        
+        usepanel.SetActive(true);
+        UseSkillController.instance.SkillListLoad(GameManager.ci.skillList.skillList);
     }
 }

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class CreateSkillInfomation : MonoBehaviour
 {
-    
-
     public static CreateSkillInfomation instance;
 
     CharacterData Character;
@@ -289,8 +287,8 @@ public class CreateSkillInfomation : MonoBehaviour
             return;
         }
         int dropNum = skillListUi.value-1;
-        setItem.skillList.skillList.RemoveAt(skillListUi.value - 1);
-        setItem.skillList.skillList.Insert(skillListUi.value - 1, CreateSkillInstance());
+        setItem.skillList.skillList.RemoveAt(dropNum);
+        setItem.skillList.skillList.Insert(dropNum, CreateSkillInstance());
         ResetAll();
         SkillListUpdate();
         updateButton.SetActive(false);
