@@ -8,6 +8,9 @@ public class CharacterController : MonoBehaviour, IBeginDragHandler, IDragHandle
     bool drag;
     int minx = -13, maxx = 11, miny = -11, maxy = 10;
 
+    bool isDubleClick;
+    float doubleClickTime = 0.2f;
+
     Vector3 pos;
 
     private void Start()
@@ -17,6 +20,12 @@ public class CharacterController : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     private void Update()
     {
+        if (isDubleClick) doubleClickTime -= Time.deltaTime;
+        if (doubleClickTime < 0f) 
+        {
+            isDubleClick = false;
+            doubleClickTime = 0.2f;
+        }
         if(drag) GridMove(pos);
     }
 
@@ -44,7 +53,18 @@ public class CharacterController : MonoBehaviour, IBeginDragHandler, IDragHandle
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (isDubleClick)
+        {
+            DubleClick();
+            return;
+        }
         GameManager.ci = GetComponent<CharacterItem>();
         SelectCharacterPanel.instance.SelectChange();
+        isDubleClick = true;
+    }
+
+    private void DubleClick()
+    {
+        CharacterEdit.instance.ValueSet();
     }
 }

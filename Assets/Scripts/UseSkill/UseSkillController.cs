@@ -7,6 +7,8 @@ public class UseSkillController : MonoBehaviour
 {
     public static UseSkillController instance;
 
+    public bool useskil = false;
+    public CharacterData user;
     private List<CharacterSkill> skillList;
     private List<CharacterItem> targetList = new List<CharacterItem>();
 
@@ -29,6 +31,7 @@ public class UseSkillController : MonoBehaviour
 
     public void SkillListLoad(List<CharacterSkill> list)
     {
+        user = GameManager.ci.data;
         skillList = list;
         selectSkill.ClearOptions();
         List<string> opt = new List<string>();
@@ -142,11 +145,13 @@ public class UseSkillController : MonoBehaviour
 
     IEnumerator Attack()
     {
+        useskil = true;
         AttackMethod();
         while (GameManager.state == GameState.InterruptPhase)
         {
             yield return null;
         }
+        useskil = false;
         AttackRecalc();
         while(GameManager.state == GameState.AttackReCulc)
         {
@@ -157,7 +162,7 @@ public class UseSkillController : MonoBehaviour
         DestroyCheck();
     }
 
-    int thdice;
+    public int thdice;
     string pname;
     private void AttackMethod()
     {

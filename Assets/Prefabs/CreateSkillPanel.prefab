@@ -831,6 +831,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: "\u9632\u5FA1"
       m_Image: {fileID: 0}
+    - m_Text: "\u30C0\u30E1\u30FC\u30B8\u5897\u52A0"
+      m_Image: {fileID: 0}
     - m_Text: "\u652F\u63F4\u30FB\u59A8\u5BB3"
       m_Image: {fileID: 0}
     - m_Text: "\u79FB\u52D5"
@@ -1936,7 +1938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3130558388453550649
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1998,7 +2000,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
