@@ -196,7 +196,7 @@ public class UseSkillController : MonoBehaviour
     {
         CreateText.instance.TextLog("補正後の攻撃判定");
         thdice += GameManager.DiceFix;
-        var pos = GameManager.ci.gameObject.transform.position;
+        var pos = UserPiece.transform.position;
         var dam = UseSkill.damage + (cordam.value - 3) + GameManager.DamFix;
         var cost = UseSkill.cost + (corcost.value - 3);
         var cordice = corjudge.value - 3;
@@ -312,8 +312,8 @@ public class UseSkillController : MonoBehaviour
         }
         if(UseSkill.addSan > 0)
         {
-            GameManager.ci.data.overSan += UseSkill.addSan;
-            CreateText.instance.TextLog(pname + " : 未精算狂気点" + GameManager.ci.data.overSan);
+            UserPiece.data.overSan += UseSkill.addSan;
+            CreateText.instance.TextLog(pname + " : 未精算狂気点" + UserPiece.data.overSan);
         }
         UserPiece.gameObject.transform.position = mpos;
         GameManager.state = GameState.PhaseEnd;
@@ -458,7 +458,6 @@ public class UseSkillController : MonoBehaviour
         CreateText.instance.TextLog(msg);
         var pos = TargetPiece.gameObject.transform.localPosition;
         TargetPiece.gameObject.transform.localPosition = new Vector3(pos.x + (UseSkill.move * 5), pos.y, pos.z);
-        pos = UserPiece.gameObject.transform.localPosition;
         GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
     }
 

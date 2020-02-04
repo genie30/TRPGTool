@@ -6950,8 +6950,8 @@ MonoBehaviour:
   - {fileID: 3130558388213935947}
   - {fileID: 3130558390092389208}
   inputExplosion: {fileID: 3130558388732680900}
-  inputCut: {fileID: 3130558389906241758}
-  inputOneCombo: {fileID: 3130558389821460260}
+  inputCut: {fileID: 3130558389821460260}
+  inputOneCombo: {fileID: 3130558389906241758}
   inputTwoCombo: {fileID: 3130558389221634805}
   inputAreaAttack: {fileID: 3130558388831216227}
   inputFallDown: {fileID: 3407703453088998249}
