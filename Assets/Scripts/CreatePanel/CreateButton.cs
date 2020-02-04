@@ -85,6 +85,11 @@ public class CreateButton : MonoBehaviour
 
     private void OnEnable()
     {
+        name.text = "";
+        hhp.text = ahp.text = bhp.text = lhp.text = "4";
+        sana.text = sanb.text = sanc.text = sand.text = sane.text = "3";
+        memo.text = "";
+
         dd.ClearOptions();
         List<string> oplist = new List<string>();
         oplist.Add("なし");

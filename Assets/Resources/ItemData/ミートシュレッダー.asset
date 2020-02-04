@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f82a07f55fc6f4b9de40f1e0f24ded, type: 3}
+  m_Name: "\u30DF\u30FC\u30C8\u30B7\u30E5\u30EC\u30C3\u30C0\u30FC"
+  m_EditorClassIdentifier: 
+  img: {fileID: 21300000, guid: 4bfaf1d5a31f3d144a682b526264b951, type: 3}
+  name: "\u30DF\u30FC\u30C8\u30B7\u30E5\u30EC\u30C3\u30C0\u30FC"
+  type: "\u30DB\u30E9\u30FC"
+  headhp: 0
+  armhp: 0
+  bodyhp: 9
+  leghp: 0
+  sana: 3
+  sanb: 3
+  sanc: 3
+  sand: 3
+  sane: 3
+  overDamage: 0
+  overSan: 0
+  memo: "\u6700\u5927\u884C\u52D5\u5024\uFF1D9\r\n\u30B7\u30E5\u30EC\u30C3\u30C0\u30FC\r\n\u591A\u811A\u6226\u8ECA\r\n\u30B9\u30AF\u30EC\u30FC\u30D1\u30FC\r\n\u6B63\u9762\u88C5\u7532\r\n\u7A81\u9032\r\n\u30AA\u30FC\u30C8\u30D0\u30E9\u30F3\u30B5\u30FC\r\n\u30E1\u30A4\u30F3\u30A8\u30F3\u30B8\u30F3\r\n\u30B5\u30D6\u30A8\u30F3\u30B8\u30F3\r\n\u88C5\u7532\u677F"
+  area: 2

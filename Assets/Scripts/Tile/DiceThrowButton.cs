@@ -22,7 +22,7 @@ public class DiceThrowButton : MonoBehaviour
 
     public void ButtonClick()
     {
-        CreateText.instance.TextLog("狂気を+1してダイスを振り直します。");
+        CreateText.instance.TextLog("ダイスを振り直します。（コスト処理は手動）");
         var dice = ThrowDice.Thirow();
         UseSkillController.instance.user.overSan += 1;
         CreateText.instance.TextLog("ダイス：" + dice);

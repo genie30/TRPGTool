@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
             var outmin = area - maxrange;
             var inmax = area + minrange;
             var outmax = area + maxrange;
-            if(itemarea <= inmin && itemarea >= inmax)
+            if (itemarea >= outmin && itemarea <= outmax)
             {
-                if(itemarea >= outmin && itemarea <= outmax)
+                if (itemarea <= inmin || itemarea >= inmax)
                 {
                     target.Add(item);
                 }

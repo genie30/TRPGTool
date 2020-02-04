@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f82a07f55fc6f4b9de40f1e0f24ded, type: 3}
+  m_Name: "\u30AC\u30F3\u30CA\u30FC1\u53F7"
+  m_EditorClassIdentifier: 
+  img: {fileID: 21300000, guid: 13557f5c7549c98469924c800b15e9c6, type: 3}
+  name: "\u30AC\u30F3\u30CA\u30FC1\u53F7"
+  type: "\u30C9\u30FC\u30EB"
+  headhp: 6
+  armhp: 4
+  bodyhp: 3
+  leghp: 4
+  sana: 3
+  sanb: 3
+  sanc: 3
+  sand: 3
+  sane: 3
+  overDamage: 0
+  overSan: 0
+  memo: "\u6700\u5927\u884C\u52D5\u5024\uFF1D10\r\n\u30B3\u30FC\u30C8/\u30EC\u30AF\u30A4\u30A8\u30E0/\u30ED\u30DE\u30CD\u30B9\u30AF
+    (2\uFF0B1/0/2)\r\n\u52A9\u8A00/\u9283\u795E/\u5B50\u5B88\u5504/\u6B7B\u306E\u821E\u8E0F\r\n(\u30AB\u30F3\u30D5\u30FC/\u767A\u52C1/\u30A2\u30F3\u30C7\u30C3\u30C9\u30AC\u30F3/\u30DC\u30EB\u30C8\u30D8\u30C3\u30C9/\u30EC\u30FC\u30B6\u30FC\u30D3\u30FC\u30E0\uFF09\r\n\r\n\u3010\u982D\u3011\r\n\u306E\u3046\u307F\u305D\r\n\u3081\u3060\u307E\r\n\u3042\u3054\r\n\u30AB\u30F3\u30D5\u30FC\r\n\u767A\u52C1\r\n\u30DC\u30EB\u30C8\u30D8\u30C3\u30C9\r\n\r\n\u3010\u8155\u3011\r\n\u3046\u3067\r\n\u304B\u305F\r\n\u3053\u3076\u3057\r\n\u30A2\u30F3\u30C7\u30C3\u30C9\u30AC\u30F3\r\n\r\n\u3010\u80F4\u3011\r\n\u305B\u307C\u306D\r\n\u306F\u3089\u308F\u305F\r\n\u306F\u3089\u308F\u305F\r\n\r\n\r\n\u3010\u811A\u3011\r\n\u307B\u306D\r\n\u307B\u306D\r\n\u3042\u3057\r\n\u30EC\u30FC\u30B6\u30FC\u30D3\u30FC\u30E0"
+  area: 2

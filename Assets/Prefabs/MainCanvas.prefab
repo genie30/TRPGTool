@@ -414,6 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textObject: {fileID: 6767606010275249731, guid: f46bfa1b294a6634bbded5699df6f0ab,
     type: 3}
+  fitter: {fileID: 7546089814518330021}
 --- !u!1 &7546089814567933379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,7 +1565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

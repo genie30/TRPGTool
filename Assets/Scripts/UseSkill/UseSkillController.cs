@@ -23,6 +23,7 @@ public class UseSkillController : MonoBehaviour
 
     CharacterSkill UseSkill;
     CharacterItem TargetPiece;
+    CharacterItem UserPiece;
 
     private void Awake()
     {
@@ -145,6 +146,7 @@ public class UseSkillController : MonoBehaviour
 
     IEnumerator Attack()
     {
+        UserPiece = GameManager.ci;
         useskil = true;
         AttackMethod();
         while (GameManager.state == GameState.InterruptPhase)
@@ -170,7 +172,8 @@ public class UseSkillController : MonoBehaviour
         GameManager.state = GameState.AttackPhase;
         var dam = UseSkill.damage + (cordam.value - 3);
         var cost = UseSkill.cost + (corcost.value - 3);
-        var cordice = corjudge.value - 3;
+        var cordice = (corjudge.value - 3) + UseSkill.correction;
+        GameManager.DiceFix += cordice;
 
         var msg =
             pname + " : [" + UseSkill.name + "]  コスト" + cost + " / 射程" + UseSkill.rangeMin + "~" + UseSkill.rangeMax
@@ -206,7 +209,10 @@ public class UseSkillController : MonoBehaviour
         {
             judge += "失敗";
             CreateText.instance.TextLog(judge);
+            UserPiece.gameObject.transform.position = mpos;
             GameManager.state = GameState.PhaseEnd;
+            GameManager.DiceFix = 0;
+            GameManager.DamFix = 0;
             return;
         }
 
@@ -298,8 +304,7 @@ public class UseSkillController : MonoBehaviour
             if (UseSkill.cut) Cut(ref TargetPiece.data.headhp);
             if (UseSkill.fallDowm) FallDown(TargetPiece.gameObject);
         }
-        if (UseSkill.oneCombo) Combo();
-        if (UseSkill.twoCombo) Combo();
+        if (UseSkill.oneCombo || UseSkill.twoCombo) Combo();
         
         if (TargetPiece.data.overDamage > 0)
         {
@@ -310,8 +315,11 @@ public class UseSkillController : MonoBehaviour
             GameManager.ci.data.overSan += UseSkill.addSan;
             CreateText.instance.TextLog(pname + " : 未精算狂気点" + GameManager.ci.data.overSan);
         }
-        GameManager.ci.gameObject.transform.position = mpos;
+        UserPiece.gameObject.transform.position = mpos;
         GameManager.state = GameState.PhaseEnd;
+        GameManager.DiceFix = 0;
+        GameManager.DamFix = 0;
+        UserPiece = null;
     }
 
     private void Explosion(int dam)
@@ -416,6 +424,7 @@ public class UseSkillController : MonoBehaviour
     {
         var pname = GameManager.ci.data.name;
         GameManager.DamFix = UseSkill.damage * -1;
+        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
         var msg =
             pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ修正" + GameManager.DamFix;
         CreateText.instance.TextLog(msg);
@@ -425,6 +434,7 @@ public class UseSkillController : MonoBehaviour
     {
         var pname = GameManager.ci.data.name;
         GameManager.DamFix = UseSkill.damage;
+        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
         var msg =
             pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ修正" + GameManager.DamFix;
         CreateText.instance.TextLog(msg);
@@ -434,6 +444,7 @@ public class UseSkillController : MonoBehaviour
     {
         var pname = GameManager.ci.data.name;
         GameManager.DiceFix = UseSkill.correction;
+        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
         var msg =
             pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / 補正" + GameManager.DiceFix;
         CreateText.instance.TextLog(msg);
@@ -446,7 +457,9 @@ public class UseSkillController : MonoBehaviour
             pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / 移動" + UseSkill.move;
         CreateText.instance.TextLog(msg);
         var pos = TargetPiece.gameObject.transform.localPosition;
-        TargetPiece.gameObject.transform.localPosition = new Vector3(pos.x + (UseSkill.move * 5), pos.y - UseSkill.cost, pos.z);
+        TargetPiece.gameObject.transform.localPosition = new Vector3(pos.x + (UseSkill.move * 5), pos.y, pos.z);
+        pos = UserPiece.gameObject.transform.localPosition;
+        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
     }
 
     private void DestroyCheck()

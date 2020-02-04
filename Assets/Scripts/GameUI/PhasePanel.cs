@@ -31,13 +31,11 @@ public class PhasePanel : MonoBehaviour
             case GameState.AttackPhase:
                 phase.text = "アクションフェイズ";
                 CreateText.instance.TextLog("行動値の高い駒でアクションしてください。");
-                button.interactable = false;
                 comselectbutton.interactable = true;
                 break;
             case GameState.InterruptPhase:
                 phase.text = "割り込み処理";
                 CreateText.instance.TextLog("ラピッド、ジャッジ、ダメージを行ってください。");
-                button.interactable = true;
                 break;
             case GameState.AttackReCulc:
                 phase.text = "ダメージ判定";
@@ -61,13 +59,27 @@ public class PhasePanel : MonoBehaviour
                 GameManager.state = GameState.PieceSelect;
                 break;
             case GameState.PieceSelect:
-                GameManager.state = GameState.AttackPhase;
-                pccreatebutton.interactable = false;
-                comcreatebutton.interactable = false;
+                if(GameManager.instance.onBoardCharacterList.Count > 0)
+                {
+                    GameManager.state = GameState.AttackPhase;
+                    pccreatebutton.interactable = false;
+                }
+                break;
+            case GameState.AttackPhase:
+                GameManager.state = GameState.PhaseEnd;
                 break;
             case GameState.InterruptPhase:
+                GameManager.state = GameState.AttackReCulc;
                 break;
             case GameState.PhaseEnd:
+                foreach(var item in GameManager.instance.onBoardCharacterList)
+                {
+                    if(item.gameObject.transform.position.y >= -7)
+                    {
+                        GameManager.state = GameState.AttackPhase;
+                        return;
+                    }
+                }
                 GameManager.state = GameState.Ready;
                 break;
         }

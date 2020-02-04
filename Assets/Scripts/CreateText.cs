@@ -7,6 +7,8 @@ public class CreateText : MonoBehaviour
 {
     [SerializeField] GameObject textObject;
     public static CreateText instance;
+    [SerializeField]
+    ContentSizeFitter fitter;
     
     private void Awake()
     {
@@ -17,5 +19,8 @@ public class CreateText : MonoBehaviour
     {
         GameObject newText = Instantiate(textObject, transform);
         newText.GetComponent<Text>().text = addText;
+        fitter.SetLayoutVertical();
+        Canvas.ForceUpdateCanvases();
+        newText.transform.SetSiblingIndex(0);
     }
 }
