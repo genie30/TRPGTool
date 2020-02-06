@@ -64955,6 +64955,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreateSkillPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 4519480606733919571, guid: dd2179c1dca0409428253f7b62ee7864,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -10.299805
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd2179c1dca0409428253f7b62ee7864, type: 3}
 --- !u!1 &1700760747
@@ -84138,6 +84143,11 @@ PrefabInstance:
     - target: {fileID: 8856807446727670342, guid: cf3cde23c60e9e94793e2b359ca61162,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856807447437278797, guid: cf3cde23c60e9e94793e2b359ca61162,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

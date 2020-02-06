@@ -17,12 +17,12 @@ public class UseSkillController : MonoBehaviour
     [SerializeField]
     Dropdown selectSkill, target, corjudge, cordam, corcost;
     [SerializeField]
-    Text type, cost, range, pow, cor, memo, move;
+    Text type, cost, range, pow, cor, memo, move, san;
     [SerializeField]
     Toggle explosion, cut, chain1, chain2, allatk, falldown;
 
-    CharacterSkill UseSkill;
-    CharacterItem TargetPiece;
+    CharacterSkill UseSkill, SetSkill;
+    CharacterItem TargetPiece, SetTarget;
     CharacterItem UserPiece;
 
     private void Awake()
@@ -79,6 +79,7 @@ public class UseSkillController : MonoBehaviour
         pow.text = loadSkill.damage.ToString();
         cor.text = loadSkill.correction.ToString();
         move.text = loadSkill.move.ToString();
+        san.text = loadSkill.addSan.ToString();
         memo.text = loadSkill.memo;
 
         explosion.isOn = loadSkill.explosion;
@@ -159,6 +160,12 @@ public class UseSkillController : MonoBehaviour
         {
             yield return null;
         }
+        GameManager.DiceFix = 0;
+        GameManager.DamFix = 0;
+        UserPiece = null;
+        SetTarget = null;
+        SetSkill = null;
+
         thdice = 0;
         pname = "";
         DestroyCheck();
@@ -168,24 +175,26 @@ public class UseSkillController : MonoBehaviour
     string pname;
     private void AttackMethod()
     {
+        SetSkill = UseSkill;
+        SetTarget = TargetPiece;
         pname = GameManager.ci.data.name;
         GameManager.state = GameState.AttackPhase;
-        var dam = UseSkill.damage + (cordam.value - 3);
-        var cost = UseSkill.cost + (corcost.value - 3);
-        var cordice = (corjudge.value - 3) + UseSkill.correction;
-        GameManager.DiceFix += cordice;
+        var damage = SetSkill.damage + (cordam.value - 3);
+        var cost = SetSkill.cost + (corcost.value - 3);
+        var correction = (corjudge.value - 3) + SetSkill.correction;
+        GameManager.DiceFix += correction;
 
         var msg =
-            pname + " : [" + UseSkill.name + "]  コスト" + cost + " / 射程" + UseSkill.rangeMin + "~" + UseSkill.rangeMax
-            + " / ダメージ" + dam + "  出目補正" + cordice;
-        if (UseSkill.explosion) msg += " +爆発";
-        if (UseSkill.cut) msg += " +切断";
-        if (UseSkill.oneCombo) msg += " +連撃1";
-        if (UseSkill.twoCombo) msg += " + 連撃2";
-        if (UseSkill.areaAttack) msg += " +全体攻撃";
-        if (UseSkill.fallDowm) msg += " +転倒";
+            pname + " : [" + SetSkill.name + "]  コスト" + cost + " / 射程" + SetSkill.rangeMin + "~" + SetSkill.rangeMax
+            + " / ダメージ" + damage + "  出目補正" + correction;
+        if (SetSkill.explosion) msg += " +爆発";
+        if (SetSkill.cut) msg += " +切断";
+        if (SetSkill.oneCombo) msg += " +連撃1";
+        if (SetSkill.twoCombo) msg += " + 連撃2";
+        if (SetSkill.areaAttack) msg += " +全体攻撃";
+        if (SetSkill.fallDowm) msg += " +転倒";
         CreateText.instance.TextLog(msg);
-        CreateText.instance.TextLog("ターゲット：" + TargetPiece.data.name);
+        CreateText.instance.TextLog("ターゲット：" + SetTarget.data.name);
         thdice = ThrowDice.Thirow();
         CreateText.instance.TextLog("ダイススロー : " + thdice);
         GameManager.state = GameState.InterruptPhase;
@@ -197,12 +206,10 @@ public class UseSkillController : MonoBehaviour
         CreateText.instance.TextLog("補正後の攻撃判定");
         thdice += GameManager.DiceFix;
         var pos = UserPiece.transform.position;
-        var dam = UseSkill.damage + (cordam.value - 3) + GameManager.DamFix;
-        var cost = UseSkill.cost + (corcost.value - 3);
-        var cordice = corjudge.value - 3;
+        var dam = SetSkill.damage + (cordam.value - 3) + GameManager.DamFix;
 
-        var mpos = new Vector3(pos.x, pos.y - cost, pos.z);
-        var jgnum = thdice + cordice;
+        var mpos = new Vector3(pos.x, pos.y - SetSkill.cost + (corcost.value - 3), pos.z);
+        var jgnum = thdice;
         string judge = "判定値" + jgnum + " : ";
 
         if (jgnum <= 5 || (dam <= 0 && jgnum <= 10))
@@ -211,8 +218,6 @@ public class UseSkillController : MonoBehaviour
             CreateText.instance.TextLog(judge);
             UserPiece.gameObject.transform.position = mpos;
             GameManager.state = GameState.PhaseEnd;
-            GameManager.DiceFix = 0;
-            GameManager.DamFix = 0;
             return;
         }
 
@@ -222,19 +227,19 @@ public class UseSkillController : MonoBehaviour
             judge += " " + dam + "ダメージ";
 
             // areaattack
-            if (UseSkill.areaAttack)
+            if (SetSkill.areaAttack)
             {
                 judge += " 全体攻撃";
                 AreaAttack(jgnum, dam);
             }
             else
             {
-                DamageSet(ref TargetPiece.data.leghp, TargetPiece.data, dam);
+                DamageSet(ref SetTarget.data.leghp, SetTarget.data, dam);
             }
             CreateText.instance.TextLog(judge);
-            if (UseSkill.explosion) Explosion(dam);
-            if (UseSkill.cut) Cut(ref TargetPiece.data.leghp);
-            if (UseSkill.fallDowm) FallDown(TargetPiece.gameObject);
+            if (SetSkill.explosion) Explosion(dam);
+            if (SetSkill.cut) Cut(ref SetTarget.data.leghp, dam);
+            if (SetSkill.fallDowm) FallDown(SetTarget.gameObject);
         }
         else if (jgnum == 8)
         {
@@ -242,19 +247,19 @@ public class UseSkillController : MonoBehaviour
             judge += " " + dam + "ダメージ";
 
             // areaattack
-            if (UseSkill.areaAttack)
+            if (SetSkill.areaAttack)
             {
                 judge += " 全体攻撃";
                 AreaAttack(jgnum, dam);
             }
             else
             {
-                DamageSet(ref TargetPiece.data.bodyhp, TargetPiece.data, dam);
+                DamageSet(ref SetTarget.data.bodyhp, SetTarget.data, dam);
             }
             CreateText.instance.TextLog(judge);
-            if (UseSkill.explosion) Explosion(dam);
-            if (UseSkill.cut) Cut(ref TargetPiece.data.bodyhp);
-            if (UseSkill.fallDowm) FallDown(TargetPiece.gameObject);
+            if (SetSkill.explosion) Explosion(dam);
+            if (SetSkill.cut) Cut(ref SetTarget.data.bodyhp, dam);
+            if (SetSkill.fallDowm) FallDown(SetTarget.gameObject);
         }
         else if (jgnum == 9)
         {
@@ -262,19 +267,19 @@ public class UseSkillController : MonoBehaviour
             judge += " " + dam + "ダメージ";
 
             // areaattack
-            if (UseSkill.areaAttack)
+            if (SetSkill.areaAttack)
             {
                 judge += " 全体攻撃";
                 AreaAttack(jgnum, dam);
             }
             else
             {
-                DamageSet(ref TargetPiece.data.armhp, TargetPiece.data, dam);
+                DamageSet(ref SetTarget.data.armhp, SetTarget.data, dam);
             }
             CreateText.instance.TextLog(judge);
-            if (UseSkill.explosion) Explosion(dam);
-            if (UseSkill.cut) Cut(ref TargetPiece.data.armhp);
-            if (UseSkill.fallDowm) FallDown(TargetPiece.gameObject);
+            if (SetSkill.explosion) Explosion(dam);
+            if (SetSkill.cut) Cut(ref SetTarget.data.armhp, dam);
+            if (SetSkill.fallDowm) FallDown(SetTarget.gameObject);
         }
         else if (jgnum > 9)
         {
@@ -290,52 +295,49 @@ public class UseSkillController : MonoBehaviour
             judge += " " + dam + "ダメージ";
 
             // areaattack
-            if (UseSkill.areaAttack)
+            if (SetSkill.areaAttack)
             {
                 judge += " 全体攻撃";
                 AreaAttack(jgnum, dam);
             }
             else
             {
-                DamageSet(ref TargetPiece.data.headhp, TargetPiece.data, dam);
+                DamageSet(ref SetTarget.data.headhp, SetTarget.data, dam);
             }
             CreateText.instance.TextLog(judge);
-            if (UseSkill.explosion) Explosion(dam);
-            if (UseSkill.cut) Cut(ref TargetPiece.data.headhp);
-            if (UseSkill.fallDowm) FallDown(TargetPiece.gameObject);
+            if (SetSkill.explosion) Explosion(dam);
+            if (SetSkill.cut) Cut(ref SetTarget.data.headhp, dam);
+            if (SetSkill.fallDowm) FallDown(SetTarget.gameObject);
         }
-        if (UseSkill.oneCombo || UseSkill.twoCombo) Combo();
+        if (SetSkill.oneCombo || SetSkill.twoCombo) Combo();
         
-        if (TargetPiece.data.overDamage > 0)
+        if (SetTarget.data.overDamage > 0)
         {
-            CreateText.instance.TextLog(TargetPiece.data.name + " : 超過ダメージ" + TargetPiece.data.overDamage);
+            CreateText.instance.TextLog(SetTarget.data.name + " : 超過ダメージ" + SetTarget.data.overDamage);
         }
-        if(UseSkill.addSan > 0)
+        if(SetSkill.addSan > 0)
         {
-            UserPiece.data.overSan += UseSkill.addSan;
+            UserPiece.data.overSan += SetSkill.addSan;
             CreateText.instance.TextLog(pname + " : 未精算狂気点" + UserPiece.data.overSan);
         }
         UserPiece.gameObject.transform.position = mpos;
         GameManager.state = GameState.PhaseEnd;
-        GameManager.DiceFix = 0;
-        GameManager.DamFix = 0;
-        UserPiece = null;
     }
 
     private void Explosion(int dam)
     {
         CreateText.instance.TextLog("爆発発動");
-        if(TargetPiece.data.type == "ホラー" || TargetPiece.data.type == "レギオン")
+        if(SetTarget.data.type == "ホラー" || SetTarget.data.type == "レギオン")
         {
-            TargetPiece.data.bodyhp -= dam;
+            SetTarget.data.bodyhp -= dam;
         }
         else
         {
-            TargetPiece.data.overDamage += dam;
+            SetTarget.data.overDamage += dam;
         }
     }
 
-    private void Cut(ref int hitPartsHP)
+    private void Cut(ref int hitPartsHP, int dam)
     {
         CreateText.instance.TextLog("切断判定");
         var dice = ThrowDice.Thirow();
@@ -343,7 +345,8 @@ public class UseSkillController : MonoBehaviour
         if(dice > 5)
         {
             CreateText.instance.TextLog("切断成功");
-            hitPartsHP = 0;
+            if (TargetPiece.data.type == "ドール" || TargetPiece.data.type == "サヴァント") hitPartsHP = 0;
+            else TargetPiece.data.bodyhp -= dam;
         }
         else
         {
@@ -358,10 +361,10 @@ public class UseSkillController : MonoBehaviour
 
     private void AreaAttack(int dice, int dam)
     {
-        var tarea = TargetPiece.data.area;
+        var tarea = SetTarget.areanum;
         foreach(var item in GameManager.instance.onBoardCharacterList)
         {
-            if(item.data.area == tarea)
+            if(item.areanum == tarea)
             {
                 if(dice > 5 && dice <= 7)
                 {
@@ -397,9 +400,9 @@ public class UseSkillController : MonoBehaviour
     {
         if(data.type == "ホラー" || data.type == "レギオン")
         {
-            if (TargetPiece.data.bodyhp < 0)
+            if (SetTarget.data.bodyhp < 0)
             {
-                TargetPiece.data.bodyhp = 0;
+                SetTarget.data.bodyhp = 0;
             }
             else
             {
@@ -424,41 +427,49 @@ public class UseSkillController : MonoBehaviour
     {
         var pname = GameManager.ci.data.name;
         GameManager.DamFix = UseSkill.damage * -1;
-        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
+        var cost = UseSkill.cost + (corcost.value - 3);
+        GameManager.ci.transform.position -= new Vector3(0, cost, 0);
+        user.overSan += UseSkill.addSan;
         var msg =
-            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ修正" + GameManager.DamFix;
+            pname + " : [" + UseSkill.name + "]  コスト" + cost + " / ダメージ修正" + GameManager.DamFix;
         CreateText.instance.TextLog(msg);
     }
 
     private void DamagePlusMethod()
     {
         var pname = GameManager.ci.data.name;
-        GameManager.DamFix = UseSkill.damage;
-        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
+        GameManager.DamFix += UseSkill.damage;
+        var cost = UseSkill.cost + (corcost.value - 3);
+        GameManager.ci.transform.position -= new Vector3(0, cost, 0);
+        user.overSan += UseSkill.addSan;
         var msg =
-            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / ダメージ修正" + GameManager.DamFix;
+            pname + " : [" + UseSkill.name + "]  コスト" + cost + " / ダメージ修正" + GameManager.DamFix;
         CreateText.instance.TextLog(msg);
     }
 
     private void BuffMethod()
     {
         var pname = GameManager.ci.data.name;
-        GameManager.DiceFix = UseSkill.correction;
-        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
+        GameManager.DiceFix += UseSkill.correction;
+        var cost = UseSkill.cost + (corcost.value - 3);
+        GameManager.ci.transform.position -= new Vector3(0, cost, 0);
+        user.overSan += UseSkill.addSan;
         var msg =
-            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / 補正" + GameManager.DiceFix;
+            pname + " : [" + UseSkill.name + "]  コスト" + cost + " / 補正" + UseSkill.correction;
         CreateText.instance.TextLog(msg);
     }
 
     private void MoveMethod()
     {
         var pname = GameManager.ci.data.name;
+        var cost = UseSkill.cost + (corcost.value - 3);
         var msg =
-            pname + " : [" + UseSkill.name + "]  コスト" + UseSkill.cost + " / 移動" + UseSkill.move;
+            pname + " : [" + UseSkill.name + "]  コスト" + cost + " / 移動" + UseSkill.move;
         CreateText.instance.TextLog(msg);
         var pos = TargetPiece.gameObject.transform.localPosition;
         TargetPiece.gameObject.transform.localPosition = new Vector3(pos.x + (UseSkill.move * 5), pos.y, pos.z);
-        GameManager.ci.transform.position -= new Vector3(0, UseSkill.cost, 0);
+        GameManager.ci.transform.position -= new Vector3(0, cost, 0);
+        user.overSan += UseSkill.addSan;
     }
 
     private void DestroyCheck()

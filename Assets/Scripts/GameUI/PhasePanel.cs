@@ -74,7 +74,7 @@ public class PhasePanel : MonoBehaviour
             case GameState.PhaseEnd:
                 foreach(var item in GameManager.instance.onBoardCharacterList)
                 {
-                    if(item.gameObject.transform.position.y >= -7)
+                    if(item.gameObject.transform.position.y > -7)
                     {
                         GameManager.state = GameState.AttackPhase;
                         return;
